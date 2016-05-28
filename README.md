@@ -1,5 +1,5 @@
 # PCML Project 2
-MATLAB code and report for [Project 2](http://icapeople.epfl.ch/mekhan/pcml15/project-2/objectDetection.html) of the [Pattern Recognition and Machine Learning course](http://icapeople.epfl.ch/mekhan/pcml15.html) at EPFL . The goal of the project was to classify images that belong to one of four categories: Horse, Airplane, Car, or Other.
+MATLAB code and report for [Project 2](http://icapeople.epfl.ch/mekhan/pcml15/project-2/objectDetection.html) of the [Pattern Recognition and Machine Learning course](http://icapeople.epfl.ch/mekhan/pcml15.html) at EPFL. The goal of the project was to classify images that belong to one of four categories: Horse, Airplane, Car, or Other.
 
 1) Run the following functions in the PCA folder so the 5-fold training and testing data for binary and multi-class prediction are already computed for each of the models:
 
@@ -13,6 +13,6 @@ MATLAB code and report for [Project 2](http://icapeople.epfl.ch/mekhan/pcml15/pr
 * Random Forest
 * SVM
 
-run the following script in the corresonding model's folder:
+run `test_<MODEL_NAME>.m` in the corresonding model's folder:
 
-`test_<MODEL_NAME>.m`
+
