@@ -2,7 +2,8 @@
 clear all; close all;
 
 %% load data
-load('../train/train.mat');
+K = 5; N = 400;
+load('../data/train.mat');
 addpath(genpath('/Applications/MATLAB_R2014b.app/toolbox/stats/stats'));
 nSeed = 8339;
 rng(nSeed);
@@ -13,8 +14,6 @@ y(y==3)=2;
 y(y==4)=1;
 
 %% k-fold
-K = 5;
-N = 400;
 Indices = kFoldGroups(y, K, nSeed);
 fprintf('\nPerforming k-folds...');
 rng(nSeed);
@@ -36,23 +35,29 @@ for k = 1:K
 end
 
 %% multiply out
-XTr_r = cell(5,1);
-XTe_r = cell(5,1);
+XTr_binary = cell(5,1);
+XTe_binary = cell(5,1);
 for k = 1:K
     fprintf('\nFold number: %d', k);
     XTr = X(Indices~=k,:);
     XTe = X(Indices==k,:);
     V = squeeze(PCA_V(k,:,:));
-    XTr_r{k}= XTr*V;
-    XTe_r{k} = XTe*V;
+    XTr_binary{k}= XTr*V;   % if N = 1, need to transpose V!
+    XTe_binary{k} = XTe*V;
 end
 
 
 %% calculate output
-yTr = cell(5,1);
-yTe = cell(5,1);
+yTr_binary = cell(5,1);
+yTe_binary = cell(5,1);
 for k = 1:K
     fprintf('\nFold number: %d', k);
-    yTr{k}= y(Indices~=k,:);
-    yTe{k} = y(Indices==k,:);
+    yTr_binary{k}= y(Indices~=k,:);
+    yTe_binary{k} = y(Indices==k,:);
 end
+
+%% save into .mat file
+save('XTr_binary.mat','XTr_binary')
+save('XTe_binary.mat','XTe_binary')
+save('yTr_binary.mat','yTr_binary')
+save('yTe_binary.mat','yTe_binary')

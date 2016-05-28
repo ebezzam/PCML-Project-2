@@ -2,7 +2,8 @@
 clear all; close all;
 
 %% load data
-load('../train/train.mat');
+K = 5; N = 400;
+load('../data/train.mat');
 addpath(genpath('/Applications/MATLAB_R2014b.app/toolbox/stats/stats'));
 nSeed = 8339;
 rng(nSeed);
@@ -10,8 +11,6 @@ X = [double(train.X_hog), double(train.X_cnn)]; % rank of 5998
 y = double(train.y);
 
 %% k-fold
-K = 5;
-N = 400;
 Indices = kFoldGroups(y, K, nSeed);
 fprintf('\nPerforming k-folds...');
 rng(nSeed);
@@ -40,7 +39,7 @@ for k = 1:K
     XTr = X(Indices~=k,:);
     XTe = X(Indices==k,:);
     V = squeeze(PCA_V(k,:,:));
-    XTr_r{k}= XTr*V;
+    XTr_r{k}= XTr*V;    % if N = 1, need to transpose V!
     XTe_r{k} = XTe*V;
 end
 
@@ -53,3 +52,9 @@ for k = 1:K
     yTr{k}= y(Indices~=k,:);
     yTe{k} = y(Indices==k,:);
 end
+
+%% save into .mat file
+save('XTr_r.mat','XTr_r')
+save('XTe_r.mat','XTe_r')
+save('yTr.mat','yTr')
+save('yTe.mat','yTe')
